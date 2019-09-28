@@ -58,9 +58,12 @@ class TLEAnalyzer:
         """Searches https://www.celestrak.com/satcat/search-results.php for satellite info"""
         session = requests.session()
         satInfo = self.tleData.loc[self.tleData["ID"] == id]
-        
+
     def print(self):
         print(self.tleData)
 
     #Week 1 Challenge Functions
-    # def print_Satellite_Info(self):
+    def print_Satellite_Info(self):
+        #Logic for identify facts about satellite go below
+        for index, row in self.tleData.iterrows():
+            print("something")
