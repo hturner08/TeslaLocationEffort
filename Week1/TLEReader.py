@@ -3,7 +3,7 @@ This code was written for the Week 1 Mini-Challenge for the
 Space Situational Awareness and Artifical Intelligence Undergraduate Research
 Opportunity program. Please abide by the license in the repository when utilizing
 our code.
-
+@author Herbie Turner
 """
 import pandas as pd
 import requests
@@ -18,8 +18,9 @@ GEO = [35,786,500]
 HEO = [30000]
 
 ########################################
-class TLEAnalyzer:
 
+
+class TLEAnalyzer:
     def __init__(self, fileadr,permission):
         """Initiates TLEReader with a file address"""
         try:
@@ -62,8 +63,8 @@ class TLEAnalyzer:
     def print(self):
         print(self.tleData)
 
-    #Week 1 Challenge Functions
+    # Week 1 Challenge Functions
     def print_Satellite_Info(self):
-        #Logic for identify facts about satellite go below
+        # Logic for identify facts about satellite go below
         for index, row in self.tleData.iterrows():
             print("something")
