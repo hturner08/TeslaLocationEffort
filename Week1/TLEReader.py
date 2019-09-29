@@ -7,6 +7,7 @@ our code.
 """
 import pandas as pd
 import requests
+import math
 
 ###Challenge Information###
 ########################################
@@ -67,14 +68,20 @@ class TLEAnalyzer:
     def print_Satellite_Info(self):
         # Logic for identify facts about satellite go below
         for index, row in self.tleData.iterrows():
+            print("----------------------------------------------------------")
+            print(row[0])
             orbit = self.calculate_orbit(row)
             print("The satellite is in " + orbit)
             ecc = self.orbit_style(row)
             print("The satellite is in " + ecc)
+            ang = self.crit_ang(row)
+            print("The satellite is " + ang)
+            sun = self.sun_sync(row)
+            print("The satellie is " + sun)
+            print("----------------------------------------------------------")
 
     def calculate_orbit(self,row):
         MeanMotion = float(row[7])
-        print(MeanMotion)
         if float(row[6]) < .05 and MeanMotion - 1 <= .01:
             return "Geostationary Orbit"
         else:
@@ -88,10 +95,36 @@ class TLEAnalyzer:
 
     def orbit_style (self,row):
         ecc = float("."+row[2])
-        print(ecc)
         if ecc <= .01:
             return "Circular Orbit"
         elif ecc <= .02:
             return "Near-Circular Orbit"
         else:
             return "Elliptical Orbit"
+
+    def crit_ang(self, row):
+        ang = float(row[6])
+        arg_perg = float(row[5])
+        orb_per = 1 / float(row[7])
+        a = float(row[1])
+        if abs(ang - 63.4) <= 2:
+            if abs(arg_perg - 270) <= 16 and abs(orb_per - .5) <= .1:
+                return "in Molniya Orbit (Critically Inclined)"
+            else:
+                return "Critically Inclined"
+        else:
+            return "Not Critically Inclined"
+
+    def sun_sync(self, row):
+        a = float(row[1])
+        i = float(row[6])
+        u = 5.167 * (10**12)
+        if self.orbit_style(row) == "Circular Orbit" or self.orbit_style(row) == "Near-Circular Orbit":
+                T = 2 * math.pi * ((a**3) / u)** (.5)
+                x = -(T/3.796)**(7/3)
+                if abs(x - math.cos(i)) <= .1 * abs(math.cos(i)):
+                    return "in Sun Synchronous Orbit"
+                else:
+                    return "in non Sun Synchronous Orbit"
+        else:
+            return "Elliptical N/A"
