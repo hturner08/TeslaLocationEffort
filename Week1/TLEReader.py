@@ -69,6 +69,8 @@ class TLEAnalyzer:
         for index, row in self.tleData.iterrows():
             orbit = self.calculate_orbit(row)
             print("The satellite is in " + orbit)
+            ecc = self.orbit_style(row)
+            print("The satellite is in " + ecc)
 
     def calculate_orbit(self,row):
         MeanMotion = float(row[7])
@@ -83,3 +85,13 @@ class TLEAnalyzer:
             else:
                 return "Highly-Elliptical Orbit"
         return "an unknown orbit"
+
+    def orbit_style (self,row):
+        ecc = float(row[2])
+        print(ecc)
+        if ecc == 0:
+            return "Circular Orbit"
+        elif ecc <= .02:
+            return "Near-Circular Orbit"
+        else:
+            return "Elliptical Orbit"
