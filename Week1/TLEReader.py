@@ -10,7 +10,7 @@ import requests
 
 ###Challenge Information###
 ########################################
-cols = ["ID","a","e","M","BigO","SmallO","i"]
+cols = ["ID","a","e","M","BigO","SmallO","i","MeanMotion"]
 # Orbits in kilometers
 LEO = [0,2000]
 MEO = [2000,35800]
@@ -52,7 +52,7 @@ class TLEAnalyzer:
         #Calculate semi major axis(in km) using formula below
         period = 1/float(arr1[7])*3600*24
         a = (period*398600/(4*3.14**2))**(1/3)
-        arrParsed = pd.DataFrame({"ID":arr0[1],"a":a,"e":arr1[4],"M":arr1[6],"BigO":arr1[3],"SmallO":arr1[5],"i":arr1[2]},index=[0])
+        arrParsed = pd.DataFrame({"ID":arr0[1],"a":a,"e":arr1[4],"M":arr1[6],"BigO":arr1[3],"SmallO":arr1[5],"i":arr1[2],"MeanMotion":arr1[7]},index=[0])
         return arrParsed
 
     def find_Satellite_Info(self, id):
@@ -67,4 +67,7 @@ class TLEAnalyzer:
     def print_Satellite_Info(self):
         # Logic for identify facts about satellite go below
         for index, row in self.tleData.iterrows():
-            print("something")
+            print("THe satellite ")
+
+    # def calculate_orbit():
+    #     if
