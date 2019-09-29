@@ -14,7 +14,7 @@ cols = ["ID","a","e","M","BigO","SmallO","i","MeanMotion"]
 # Orbits in kilometers
 LEO = [0,2000]
 MEO = [2000,35800]
-GEO = [35,786,500]
+GEO = [35786,500]
 HEO = [30000]
 
 ########################################
