@@ -67,7 +67,18 @@ class TLEAnalyzer:
     def print_Satellite_Info(self):
         # Logic for identify facts about satellite go below
         for index, row in self.tleData.iterrows():
-            print("THe satellite ")
+            orbit = self.calculate_orbit(row)
+            print("The satellite is in " + orbit)
 
-    # def calculate_orbit():
-    #     if
+    def calculate_orbit(self,row):
+        MeanMotion = float(row[7])
+        if float(row[6]) < .01 and MeanMotion - 1 <= .01:
+            return "Geostationary Orbit"
+        else:
+            if MeanMotion > 11:
+                return "Low Earth Orbit"
+            elif MeanMotion < 11 and MeanMotion > 1:
+                return "Medium Earth Orbit"
+            else:
+                return "Highly-Elliptical Orbit"
+        return "an unknown orbit"
