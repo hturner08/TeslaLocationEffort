@@ -72,7 +72,8 @@ class TLEAnalyzer:
 
     def calculate_orbit(self,row):
         MeanMotion = float(row[7])
-        if float(row[6]) < .01 and MeanMotion - 1 <= .01:
+        print(MeanMotion)
+        if float(row[6]) < .05 and MeanMotion - 1 <= .01:
             return "Geostationary Orbit"
         else:
             if MeanMotion > 11:
