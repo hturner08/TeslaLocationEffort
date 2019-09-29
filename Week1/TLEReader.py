@@ -87,9 +87,9 @@ class TLEAnalyzer:
         return "an unknown orbit"
 
     def orbit_style (self,row):
-        ecc = float(row[2])
+        ecc = float("."+row[2])
         print(ecc)
-        if ecc == 0:
+        if ecc <= .01:
             return "Circular Orbit"
         elif ecc <= .02:
             return "Near-Circular Orbit"
