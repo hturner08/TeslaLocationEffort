@@ -3,13 +3,15 @@ This code was written for the Week 1 Mini-Challenge for the
 Space Situational Awareness and Artifical Intelligence Undergraduate Research
 Opportunity program. Please abide by the license in the repository when utilizing
 our code.
-@author Herbie Turner
 """
+
+# Libaries used are pandas, requests, and math
 import pandas as pd
 import requests
 import math
 
-###Challenge Information###
+#######################################
+####### Challenge Information ##########
 ########################################
 cols = ["ID","a","e","M","BigO","SmallO","i","MeanMotion"]
 # Orbits in kilometers
@@ -66,10 +68,9 @@ class TLEAnalyzer:
 
     # Week 1 Challenge Functions
     def print_Satellite_Info(self):
-        # Logic for identify facts about satellite go below
+        """Prints orbital information about each satellite"""
         for index, row in self.tleData.iterrows():
-            print("----------------------------------------------------------")
-            print(row[0])
+            print("-------------------------" + row[0] + "------------------------------")
             orbit = self.calculate_orbit(row)
             print("The satellite is in " + orbit)
             ecc = self.orbit_style(row)
@@ -78,9 +79,10 @@ class TLEAnalyzer:
             print("The satellite is " + ang)
             sun = self.sun_sync(row)
             print("The satellie is " + sun)
-            print("----------------------------------------------------------")
+            print("\n")
 
     def calculate_orbit(self,row):
+        """Calculates which orbit a satellite is in"""
         MeanMotion = float(row[7])
         if float(row[6]) < .05 and MeanMotion - 1 <= .01:
             return "Geostationary Orbit"
@@ -94,6 +96,7 @@ class TLEAnalyzer:
         return "an unknown orbit"
 
     def orbit_style (self,row):
+        """Determins nature of orbit based on eccentricity"""
         ecc = float("."+row[2])
         if ecc <= .01:
             return "Circular Orbit"
@@ -103,6 +106,7 @@ class TLEAnalyzer:
             return "Elliptical Orbit"
 
     def crit_ang(self, row):
+        """Checks if satellite is in a critically inclined orbit"""
         ang = float(row[6])
         arg_perg = float(row[5])
         orb_per = 1 / float(row[7])
@@ -116,10 +120,12 @@ class TLEAnalyzer:
             return "Not Critically Inclined"
 
     def sun_sync(self, row):
+        """Determines whether or not a satellite is in a Sun Synchronous orbit"""
         a = float(row[1])
         i = float(row[6])
         u = 5.167 * (10**12)
-        if self.orbit_style(row) == "Circular Orbit" or self.orbit_style(row) == "Near-Circular Orbit":
+        if self.orbit_style(row) == "Circular Orbit"\
+         or self.orbit_style(row) == "Near-Circular Orbit":
                 T = 2 * math.pi * ((a**3) / u)** (.5)
                 x = -(T/3.796)**(7/3)
                 if abs(x - math.cos(i)) <= .1 * abs(math.cos(i)):
