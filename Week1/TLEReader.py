@@ -120,7 +120,7 @@ class TLEAnalyzer:
             return "Not Critically Inclined"
 
     def sun_sync(self, row):
-        """Determines whether or not a satellite is in a Sun Synchronous orbit"""
+        """Determines whether or not a satellite in a non-elliptical orbit is in a Sun Synchronous orbit"""
         a = float(row[1])
         i = float(row[6])
         u = 5.167 * (10**12)
